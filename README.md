@@ -4,4 +4,4 @@
 
 2 Add the mobilenet_v2.pth, which dowmload from "mobilenet_v2": "https://download.pytorch.org/models/mobilenet_v2-b0353104.pth"
 
-3 run network by using python validate.py
+3 Run network by using python validate.py
