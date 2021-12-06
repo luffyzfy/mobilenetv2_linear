@@ -9,7 +9,7 @@ from torch import nn
 from torchvision.ops.misc import ConvNormActivation
 #from torchvision.utils import _log_api_usage_once
 from torchvision.models._utils import _make_divisible
-
+from operations import ConvX,part_quant
 
 __all__ = ["MobileNetV2", "mobilenet_v2"]
 
@@ -70,7 +70,8 @@ class InvertedResidual(nn.Module):
                     activation_layer=nn.ReLU6,
                 ),
                 # pw-linear
-                nn.Conv2d(hidden_dim, oup, 1, 1, 0, bias=False),
+                #nn.Conv2d(hidden_dim, oup, 1, 1, 0, bias=False),
+                ConvX(hidden_dim, oup, 1, 1, 0, bias=False),
                 norm_layer(oup),
             ]
         )
@@ -168,7 +169,7 @@ class MobileNetV2(nn.Module):
 
         # weight initialization
         for m in self.modules():
-            if isinstance(m, nn.Conv2d):
+            if isinstance(m, ConvX):#nn.Conv2d):
                 nn.init.kaiming_normal_(m.weight, mode="fan_out")
                 if m.bias is not None:
                     nn.init.zeros_(m.bias)
